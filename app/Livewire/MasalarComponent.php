@@ -60,6 +60,6 @@ class MasalarComponent extends Component
 
     public function render()
     {
-        return view('livewire.masalar-component')->extends('Restaurant.Bilesenler.app')->section('content');
+        return view('livewire.masalar-component');
     }
 }
