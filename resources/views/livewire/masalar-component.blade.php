@@ -1,4 +1,4 @@
-<div wire:poll.1s="loadData">
+<div wire:poll.250ms="loadData" wire:ignore.self>
     <div class="category-tabs">
         <button wire:click="selectCategory()" 
                 class="category-tab {{ is_null($selectedKategori) ? 'active' : '' }}">
@@ -13,7 +13,7 @@
         @endforeach
         
         <div class="right-buttons">
-            <button class="category-tab settings-button">
+            <button class="category-tab settings-button" style="background-color: #667eea; color: white;">
                 {{ $cashierName }} 
             </button>
             <button class="category-tab settings-button" onclick="openSettings()">
@@ -29,128 +29,130 @@
         </div>
     </div>
 
-    <!-- Ayarlar Modal (JavaScript ile çalışacak) -->
-    <div id="settingsModal" class="modal" style="display: none;">
-        <div class="modal-content large-modal">
-            <div class="modal-header">
-                <h2><i class="fa fa-cog"></i> Sistem Ayarları</h2>
-                <span class="close" onclick="closeSettings()">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="settings-grid">
-                    <!-- Sol Kolon -->
-                    <div class="settings-column">
-                        <h3>Genel Ayarlar</h3>
-                        <button class="setting-btn" onclick="openThemeSettings()">
-                            <i class="fa fa-palette"></i>
-                            <div>
-                                <strong>Tema Ayarları</strong>
-                                <small>Renk ve görünüm ayarları</small>
-                            </div>
-                        </button>
+    <!-- Ayarlar Modal (wire:ignore ile korunuyor) -->
+    <div wire:ignore>
+        <div id="settingsModal" class="modal" style="display: none;">
+            <div class="modal-content large-modal">
+                <div class="modal-header">
+                    <h2><i class="fa fa-cog"></i> Sistem Ayarları</h2>
+                    <span class="close" onclick="closeSettings()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="settings-grid">
+                        <!-- Sol Kolon -->
+                        <div class="settings-column">
+                            <h3>Genel Ayarlar</h3>
+                            <button class="setting-btn" onclick="openThemeSettings()">
+                                <i class="fa fa-palette"></i>
+                                <div>
+                                    <strong>Tema Ayarları</strong>
+                                    <small>Renk ve görünüm ayarları</small>
+                                </div>
+                            </button>
+                            
+                            <button class="setting-btn" onclick="openLanguageSettings()">
+                                <i class="fa fa-language"></i>
+                                <div>
+                                    <strong>Dil Ayarları</strong>
+                                    <small>Sistem dili ve bölge</small>
+                                </div>
+                            </button>
+                            
+                            <button class="setting-btn" onclick="openNotificationSettings()">
+                                <i class="fa fa-bell"></i>
+                                <div>
+                                    <strong>Bildirim Ayarları</strong>
+                                    <small>Ses ve görsel bildirimler</small>
+                                </div>
+                            </button>
+                            
+                            <button class="setting-btn" onclick="openDisplaySettings()">
+                                <i class="fa fa-desktop"></i>
+                                <div>
+                                    <strong>Ekran Ayarları</strong>
+                                    <small>Çözünürlük ve görüntü</small>
+                                </div>
+                            </button>
+                        </div>
                         
-                        <button class="setting-btn" onclick="openLanguageSettings()">
-                            <i class="fa fa-language"></i>
-                            <div>
-                                <strong>Dil Ayarları</strong>
-                                <small>Sistem dili ve bölge</small>
-                            </div>
-                        </button>
+                        <!-- Orta Kolon -->
+                        <div class="settings-column">
+                            <h3>Restoran Ayarları</h3>
+                            <button class="setting-btn" onclick="openTableSettings()">
+                                <i class="fa fa-table"></i>
+                                <div>
+                                    <strong>Masa Ayarları</strong>
+                                    <small>Masa düzeni ve özellikleri</small>
+                                </div>
+                            </button>
+                            
+                            <button class="setting-btn" onclick="openMenuSettings()">
+                                <i class="fa fa-cutlery"></i>
+                                <div>
+                                    <strong>Menü Ayarları</strong>
+                                    <small>Kategoriler ve ürünler</small>
+                                </div>
+                            </button>
+                            
+                            <button class="setting-btn" onclick="openPriceSettings()">
+                                <i class="fa fa-money"></i>
+                                <div>
+                                    <strong>Fiyat Ayarları</strong>
+                                    <small>Para birimi ve fiyatlar</small>
+                                </div>
+                            </button>
+                            
+                            <button class="setting-btn" onclick="openTaxSettings()">
+                                <i class="fa fa-percent"></i>
+                                <div>
+                                    <strong>Vergi Ayarları</strong>
+                                    <small>KDV ve hizmet bedeli</small>
+                                </div>
+                            </button>
+                        </div>
                         
-                        <button class="setting-btn" onclick="openNotificationSettings()">
-                            <i class="fa fa-bell"></i>
-                            <div>
-                                <strong>Bildirim Ayarları</strong>
-                                <small>Ses ve görsel bildirimler</small>
-                            </div>
-                        </button>
-                        
-                        <button class="setting-btn" onclick="openDisplaySettings()">
-                            <i class="fa fa-desktop"></i>
-                            <div>
-                                <strong>Ekran Ayarları</strong>
-                                <small>Çözünürlük ve görüntü</small>
-                            </div>
-                        </button>
-                    </div>
-                    
-                    <!-- Orta Kolon -->
-                    <div class="settings-column">
-                        <h3>Restoran Ayarları</h3>
-                        <button class="setting-btn" onclick="openTableSettings()">
-                            <i class="fa fa-table"></i>
-                            <div>
-                                <strong>Masa Ayarları</strong>
-                                <small>Masa düzeni ve özellikleri</small>
-                            </div>
-                        </button>
-                        
-                        <button class="setting-btn" onclick="openMenuSettings()">
-                            <i class="fa fa-cutlery"></i>
-                            <div>
-                                <strong>Menü Ayarları</strong>
-                                <small>Kategoriler ve ürünler</small>
-                            </div>
-                        </button>
-                        
-                        <button class="setting-btn" onclick="openPriceSettings()">
-                            <i class="fa fa-money"></i>
-                            <div>
-                                <strong>Fiyat Ayarları</strong>
-                                <small>Para birimi ve fiyatlar</small>
-                            </div>
-                        </button>
-                        
-                        <button class="setting-btn" onclick="openTaxSettings()">
-                            <i class="fa fa-percent"></i>
-                            <div>
-                                <strong>Vergi Ayarları</strong>
-                                <small>KDV ve hizmet bedeli</small>
-                            </div>
-                        </button>
-                    </div>
-                    
-                    <!-- Sağ Kolon -->
-                    <div class="settings-column">
-                        <h3>Sistem Yönetimi</h3>
-                        <button class="setting-btn" onclick="openPrinterSettings()">
-                            <i class="fa fa-print"></i>
-                            <div>
-                                <strong>Yazıcı Ayarları</strong>
-                                <small>Fiş ve mutfak yazıcıları</small>
-                            </div>
-                        </button>
-                        
-                        <button class="setting-btn" onclick="openUserSettings()">
-                            <i class="fa fa-users"></i>
-                            <div>
-                                <strong>Kullanıcı Yönetimi</strong>
-                                <small>Kasiyerler ve yetkiler</small>
-                            </div>
-                        </button>
-                        
-                        <button class="setting-btn" onclick="openBackupSettings()">
-                            <i class="fa fa-database"></i>
-                            <div>
-                                <strong>Yedekleme</strong>
-                                <small>Veri yedekleme ve geri yükleme</small>
-                            </div>
-                        </button>
-                        
-                        <a href="{{ route('restaurant.clear-session') }}" class="setting-btn danger" style="text-decoration: none !important;">
-                            <i class="fa fa-refresh"></i>
-                            <div>
-                                <strong>Sistem Sıfırlama</strong>
-                                <small>Kalıcı olarak çıkış yap</small>
-                            </div>
-                        </a>
+                        <!-- Sağ Kolon -->
+                        <div class="settings-column">
+                            <h3>Sistem Yönetimi</h3>
+                            <button class="setting-btn" onclick="openPrinterSettings()">
+                                <i class="fa fa-print"></i>
+                                <div>
+                                    <strong>Yazıcı Ayarları</strong>
+                                    <small>Fiş ve mutfak yazıcıları</small>
+                                </div>
+                            </button>
+                            
+                            <button class="setting-btn" onclick="openUserSettings()">
+                                <i class="fa fa-users"></i>
+                                <div>
+                                    <strong>Kullanıcı Yönetimi</strong>
+                                    <small>Kasiyerler ve yetkiler</small>
+                                </div>
+                            </button>
+                            
+                            <button class="setting-btn" onclick="openBackupSettings()">
+                                <i class="fa fa-database"></i>
+                                <div>
+                                    <strong>Yedekleme</strong>
+                                    <small>Veri yedekleme ve geri yükleme</small>
+                                </div>
+                            </button>
+                            
+                            <a href="{{ route('restaurant.clear-session') }}" class="setting-btn danger" style="text-decoration: none !important;">
+                                <i class="fa fa-refresh"></i>
+                                <div>
+                                    <strong>Sistem Sıfırlama</strong>
+                                    <small>Kalıcı olarak çıkış yap</small>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeSettings()">
-                    <i class="fa fa-times"></i> Kapat
-                </button>
+                <div class="modal-footer">
+                    <button class="btn-secondary" onclick="closeSettings()">
+                        <i class="fa fa-times"></i> Kapat
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -181,9 +183,12 @@
                     
                     // Toplam tutarı adisyon'dan al
                     $toplamTutar = $masa->adisyon ? $masa->adisyon->toplam_tutar : 0;
+                    
+                    // Masa ID'sini encode et
+                    $encodedMasaId = urlencode(encrypt($masa->id));
                 @endphp
                 
-                <a href="{{ $durum === 'bos' ? '#yeni-siparis?masa=' . $masa->id : '#siparis-detay?masa=' . $masa->id }}" 
+                <a href="{{ $durum === 'bos' ? route('newOrder', ['table' => $encodedMasaId]) : route('orderDetail', ['table' => $encodedMasaId]) }}" 
                    class="table-card {{ $statusClass }}">
                     <div class="table-content">
                         <div class="table-header">
@@ -228,50 +233,117 @@
             @endforelse
         </div>
     </div>
-
-    <script>
-        // Sadece ayarlar modal'ı için JavaScript (Livewire ile değiştirilmeyen kısım)
-        function openSettings() {
-            document.getElementById('settingsModal').classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeSettings() {
-            document.getElementById('settingsModal').classList.remove('show');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Sayfa yüklendiğinde modal kapalı olsun
-        document.addEventListener('DOMContentLoaded', function() {
-            closeSettings();
-        });
-
-        // ESC tuşu ile kapatma
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeSettings();
-            }
-        });
-
-        // Modal dışına tıklanınca kapatma
-        window.onclick = function(event) {
-            let modal = document.getElementById('settingsModal');
-            if (event.target == modal) {
-                closeSettings();
-            }
-        }
-
-        // Ayar butonları için fonksiyonlar
-        function openThemeSettings() { alert('Tema ayarları Yakında......'); closeSettings(); }
-        function openLanguageSettings() { alert('Dil ayarları Yakında......'); closeSettings(); }
-        function openNotificationSettings() { alert('Bildirim ayarları Yakında......'); closeSettings(); }
-        function openDisplaySettings() { alert('Ekran ayarları Yakında......'); closeSettings(); }
-        function openTableSettings() { alert('Masa ayarları Yakında......'); closeSettings(); }
-        function openMenuSettings() { alert('Menü ayarları Yakında......'); closeSettings(); }
-        function openPriceSettings() { alert('Fiyat ayarları Yakında......'); closeSettings(); }
-        function openTaxSettings() { alert('Vergi ayarları Yakında......'); closeSettings(); }
-        function openPrinterSettings() { alert('Yazıcı ayarları Yakında......'); closeSettings(); }
-        function openUserSettings() { alert('Kullanıcı yönetimi Yakında......'); closeSettings(); }
-        function openBackupSettings() { alert('Yedekleme ayarları Yakında......'); closeSettings(); }
-    </script>
 </div>
+
+<script>
+    // Modal durumunu global olarak takip et
+    let modalState = {
+        isSettingsOpen: false
+    };
+
+    // Modal fonksiyonları
+    function openSettings() {
+        modalState.isSettingsOpen = true;
+        const modal = document.getElementById('settingsModal');
+        modal.style.display = 'block';
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSettings() {
+        modalState.isSettingsOpen = false;
+        const modal = document.getElementById('settingsModal');
+        modal.style.display = 'none';
+        modal.classList.remove('show');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Livewire güncellemelerinden sonra modal durumunu koru
+    document.addEventListener('livewire:updated', function() {
+        if (modalState.isSettingsOpen) {
+            // Modal açıksa, tekrar aç
+            const modal = document.getElementById('settingsModal');
+            if (modal) {
+                modal.style.display = 'block';
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+    });
+
+    // Sayfa yüklendiğinde modal kapalı olsun
+    document.addEventListener('DOMContentLoaded', function() {
+        closeSettings();
+    });
+
+    // ESC tuşu ile kapatma
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && modalState.isSettingsOpen) {
+            closeSettings();
+        }
+    });
+
+    // Modal dışına tıklanınca kapatma
+    window.onclick = function(event) {
+        let modal = document.getElementById('settingsModal');
+        if (event.target == modal && modalState.isSettingsOpen) {
+            closeSettings();
+        }
+    }
+
+    // Ayar butonları için fonksiyonlar
+    function openThemeSettings() { 
+        alert('Tema ayarları Yakında......'); 
+        closeSettings(); 
+    }
+    
+    function openLanguageSettings() { 
+        alert('Dil ayarları Yakında......'); 
+        closeSettings(); 
+    }
+    
+    function openNotificationSettings() { 
+        alert('Bildirim ayarları Yakında......'); 
+        closeSettings(); 
+    }
+    
+    function openDisplaySettings() { 
+        alert('Ekran ayarları Yakında......'); 
+        closeSettings(); 
+    }
+    
+    function openTableSettings() { 
+        alert('Masa ayarları Yakında......'); 
+        closeSettings(); 
+    }
+    
+    function openMenuSettings() { 
+        alert('Menü ayarları Yakında......'); 
+        closeSettings(); 
+    }
+    
+    function openPriceSettings() { 
+        alert('Fiyat ayarları Yakında......'); 
+        closeSettings(); 
+    }
+    
+    function openTaxSettings() { 
+        alert('Vergi ayarları Yakında......'); 
+        closeSettings(); 
+    }
+    
+    function openPrinterSettings() { 
+        alert('Yazıcı ayarları Yakında......'); 
+        closeSettings(); 
+    }
+    
+    function openUserSettings() { 
+        alert('Kullanıcı yönetimi Yakında......'); 
+        closeSettings(); 
+    }
+    
+    function openBackupSettings() { 
+        alert('Yedekleme ayarları Yakında......'); 
+        closeSettings(); 
+    }
+</script>

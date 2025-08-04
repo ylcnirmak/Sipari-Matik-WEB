@@ -581,13 +581,14 @@
         .loading {
             animation: pulse 2s infinite;
         }
+
+        
     </style>
     @livewireStyles
 </head>
 <body>
-    <div class="main-content">
+    
         @yield('content')
-    </div>
     @livewireScripts
 </body>
 </html>

@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\Garson\GarsonController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Kurye\KuryeController;
+
+use App\Http\Controllers\Garson\GarsonController;
 use App\Http\Controllers\Muhasebe\MuhasebeController;
 use App\Http\Controllers\Restaurant\RestaurantController;
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\Admin\AdminController;
 
 Route::get('/', function () {
     // Cookie kontrol et
@@ -47,6 +49,11 @@ Route::middleware(['auth', 'role:restaurant'])->group(function(){
     
     // Restaurant logout (kasiyer ekranına dön)
     Route::post('/restaurant-logout', [RestaurantController::class, 'logout'])->name('restaurant.logout');
+    Route::get('/NewOrder/{table}', [OrderController::class, 'newOrder'])->name('newOrder');
+    Route::get('/OrderDetail/{table}', [OrderController::class, 'orderDetail'])->name('orderDetail');
+    Route::post('/unlock-table', [OrderController::class, 'unlockTable'])->name('unlockTable');
+    
+
 });
 
 // Tamamen çıkış yap
